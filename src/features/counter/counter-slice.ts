@@ -30,6 +30,11 @@ const counterSlice = createSlice({
       // it's okay todo this because immer makes it mmutable under the nood
       state.value += 1;
     },
+
+    // PayloadAction type : obj || array || number
+    amountAdded(state, action: PayloadAction<number>) {
+      state.value += action.payload;
+    },
     // decrement
     // reset
   },
@@ -38,5 +43,5 @@ const counterSlice = createSlice({
 // createSlice an Other
 // 1. reducer 기능인 [slice audio]
 
-export const { incremented } = counterSlice.actions;
+export const { incremented, amountAdded } = counterSlice.actions;
 export default counterSlice.reducer;
