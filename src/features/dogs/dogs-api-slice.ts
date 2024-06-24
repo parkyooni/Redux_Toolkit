@@ -44,3 +44,7 @@ export const apiSlice = createApi({
     };
   },
 });
+
+// fetchBreeds: 가져오기위한 쿼리문
+// useFetchBreedsQuery:  업데이트 데이터를 게시하기 위해 변형 요청 수행
+export const { useFetchBreedsQuery } = apiSlice;

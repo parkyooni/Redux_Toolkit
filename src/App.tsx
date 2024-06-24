@@ -1,6 +1,7 @@
-import React from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { incremented, amountAdded } from "./features/counter/counter-slice";
+import { useFetchBreedsQuery } from "./features/dogs/dogs-api-slice";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
@@ -18,6 +19,16 @@ function App() {
     // amountAdded by a fixed amount
     dispatch(amountAdded(3));
   };
+
+  // API 요청한 데이터를 select 태그를 통해서 데이터 배열의 길이 사용자가 설정하기
+  const [numDogs, setNumDogs] = useState(10);
+  // -> 처음 API를 useFetchBreedsQuery 함수를 통해 요청할때 기본값이 10개이며,
+  // 해당 부분의 select의 변경으로 10개보다 이하일떄는 데이터를 재용청하지않고, store에 데이터가 캐싱되어 그값을 사용,
+  // 10개의 기본값보다 많은 값을 요청할경우 데이터 요청
+  // 캐싱된 데이터튼 일정시간이 흐른뒤에 캐싱된 데이터는 자동으로 삭제됨. (이벤트 동작이 더이상 발생하지않는경우)
+
+  const { data = [], isFetching } = useFetchBreedsQuery(numDogs);
+  // data는 undefined를 뜨기떄문에 안정적인 코드를 위해 빈배열로 담음
 
   return (
     <>
@@ -37,9 +48,45 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <div>
+        <p>Dogs to fetch: </p>
+        <select
+          name=""
+          id=""
+          value={numDogs}
+          onChange={(e) => setNumDogs(Number(e.target.value))} // 문자열로 받아온 데이터값으로 인하여 e.target.value
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+
+      <div className="read-the-docs">
+        <p>Number of dogs fetched {data.length}</p>
+        {/* 10개의 limte으로 인하여 개발자도구 : redux에 10개의 배열이 담긴것 확인됨 -> 해당 데이터를 table로 UI 작용
+        useFetchBreedsQuery()의 기본값이 10개로, 값을 직접 추가시, 해당 데이터길이로 가져옴*/}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Picture</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((breed) => (
+              <tr key={breed.id}>
+                <td>{breed.name}</td>
+                <td>
+                  <img src={breed.image.url} alt={breed.name} height={250} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }
