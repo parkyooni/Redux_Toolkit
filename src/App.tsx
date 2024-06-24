@@ -1,10 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import { incremented } from "./features/counter/counter-slice";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0); -> React state의 기능 create react할때 초기 설정로직
+
+  // useAppSelector 별도로 작성 가능 || inline function 가능
+  const count = useAppSelector((state) => state.counter.value);
 
   return (
     <>
@@ -18,7 +23,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button>
           count is {count}
         </button>
         <p>
@@ -29,7 +34,7 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

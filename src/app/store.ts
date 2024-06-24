@@ -14,4 +14,4 @@ export const store = configureStore({
 export type AppDispatch = typeof store.dispatch;
 
 // 해당 저장소에 더 많은 slice reducer를 추가하면, 해당 유형이 자동으로 업뎃 처리해줌
-export type Rootsate = ReturnType<typeof store.getState>; // <typeof store.getState>; TS의 내장객체
+export type RootState = ReturnType<typeof store.getState>; // <typeof store.getState>; TS의 내장객체
