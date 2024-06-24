@@ -13,7 +13,9 @@ function App() {
   const dispatch = useAppDispatch();
 
   const handleDispatch = () => {
+    // incremented by 1
     // dispatch(incremented());
+    // amountAdded by a fixed amount
     dispatch(amountAdded(3));
   };
 
