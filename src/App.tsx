@@ -29,6 +29,7 @@ function App() {
 
   const { data = [], isFetching } = useFetchBreedsQuery(numDogs);
   // data는 undefined를 뜨기떄문에 안정적인 코드를 위해 빈배열로 담음
+  // isFetching : promise로 데이터를 요청해서 받아올때, pending으로 불러오는중에 true이면 이전 데이터가 있는경우를 제외하고 Loading식으로 보여줌.
 
   return (
     <>
@@ -68,6 +69,7 @@ function App() {
         <p>Number of dogs fetched {data.length}</p>
         {/* 10개의 limte으로 인하여 개발자도구 : redux에 10개의 배열이 담긴것 확인됨 -> 해당 데이터를 table로 UI 작용
         useFetchBreedsQuery()의 기본값이 10개로, 값을 직접 추가시, 해당 데이터길이로 가져옴*/}
+        <div>{isFetching ? "...refetching" : ""}</div>
         <table>
           <thead>
             <tr>
