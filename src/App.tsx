@@ -10,6 +10,11 @@ function App() {
 
   // useAppSelector 별도로 작성 가능 || inline function 가능
   const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
+
+  const handleDispatch = () => {
+    dispatch(incremented());
+  };
 
   return (
     <>
@@ -23,9 +28,8 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button>
-          count is {count}
-        </button>
+        {/* <button onClick={() => setCount((count) => count + 1)}> */}
+        <button onClick={handleDispatch}>count is {count}</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
